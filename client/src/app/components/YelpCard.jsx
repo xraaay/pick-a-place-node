@@ -38,7 +38,7 @@ class YelpCard extends React.Component {
                         <br></br>
                         <CardText className="text-left ml-3 mt-3 mb-3">
 
-                            <strong>Distance:</strong> {distance <= 1 ? + distance + " mile" : distance + " miles"}
+                            <strong>Distance:</strong> {distance === 1 ? distance + " mile" : distance + " miles"}
                             <br></br>
                             <strong>Price:</strong> {this.props.business.price}
                             <br></br>

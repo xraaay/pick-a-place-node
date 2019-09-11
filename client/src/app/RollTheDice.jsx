@@ -6,6 +6,7 @@ import {
     Row,
     Col,
     Container,
+    Button
 } from 'reactstrap'
 import YelpCard from './components/YelpCard'
 
@@ -31,13 +32,25 @@ class RollTheDice extends Component {
         }
         yelpService.getBusinesses(data)
             .then(response => {
-                let shuffle = shuffleResults(response.data.businesses)
-                let three = shuffle.slice(0, 3)
                 this.setState({
-                    results: three
+                    businesses: response.data.businesses
                 })
+                this.shuffleAndSlice(response.data)
             })
             .catch(console.log)
+    }
+
+    shuffleAndSlice = (data) => {
+        if(!data.businesses){
+            data = this.state.businesses
+        } else {
+            data = data.businesses
+        }
+        let shuffle = shuffleResults(data)
+        let three = shuffle.slice(0, 3)
+        this.setState({
+            results: three
+        })
     }
 
     getGeoLocation() {
@@ -67,6 +80,11 @@ class RollTheDice extends Component {
                                 </Col>
                             )
                         })}
+                    </Row>
+                    <Row>
+                        <Col className="text-center mt-3">
+                            {this.state.results[0] ? <Button size="lg" color="success" onClick={this.shuffleAndSlice}>Reroll</Button> : null}
+                        </Col>
                     </Row>
                 </Container>
             </>

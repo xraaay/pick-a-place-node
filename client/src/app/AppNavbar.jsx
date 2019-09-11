@@ -28,6 +28,7 @@ import {
   Col,
   NavLink
 } from "reactstrap";
+import SearchForm from "./SearchForm";
 
 class AppNavbar extends React.Component {
   state = {
@@ -104,6 +105,9 @@ class AppNavbar extends React.Component {
                     <i className="tim-icons icon-atom" />
                     Would You Rather
                   </NavLink>
+                </NavItem>
+                <NavItem>
+                    <SearchForm />
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>
