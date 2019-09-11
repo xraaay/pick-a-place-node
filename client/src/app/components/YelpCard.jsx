@@ -36,18 +36,18 @@ class YelpCard extends React.Component {
                         <br></br>
                         <strong>{this.props.business.display_phone}</strong>
                         <br></br>
-                        <CardText className="text-left ml-3 mt-3 mb-3">
+                    </CardText>
+                    <CardText className="text-left ml-3 mt-3 mb-3">
 
-                            <strong>Distance:</strong> {distance === 1 ? distance + " mile" : distance + " miles"}
-                            <br></br>
-                            <strong>Price:</strong> {this.props.business.price}
-                            <br></br>
-                            <strong>Reviews:</strong> {this.props.business.review_count}
-                            <br></br>
-                            <strong>Categories:</strong> {this.props.business.categories.map((item, index) => {
-                                return (index ? ', ' : "") + item.title
-                            })}
-                        </CardText>
+                        <strong>Distance:</strong> {distance === 1 ? distance + " mile" : distance + " miles"}
+                        <br></br>
+                        <strong>Price:</strong> {this.props.business.price}
+                        <br></br>
+                        <strong>Reviews:</strong> {this.props.business.review_count}
+                        <br></br>
+                        <strong>Categories:</strong> {this.props.business.categories.map((item, index) => {
+                            return (index ? ', ' : "") + item.title
+                        })}
                     </CardText>
                 </Card>
             )

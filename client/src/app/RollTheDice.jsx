@@ -75,8 +75,8 @@ class RollTheDice extends Component {
                     <Row style={{ marginTop: "100px" }}>
                         {this.state.results && this.state.results.map(item => {
                             return (
-                                <Col sm="4">
-                                    <YelpCard key={item.id} business={item}/>
+                                <Col sm="4" key={item.id}>
+                                    <YelpCard business={item}/>
                                 </Col>
                             )
                         })}
