@@ -21,7 +21,8 @@
     "react-select": "2.4.3",
     "react-slick": "0.24.0",
     "react-tagsinput": "3.19.0",
-    "reactstrap": "8.0.0"
+    "reactstrap": "8.0.0",
+    "sweetalert2": "^8.17.1"
   },
   "devDependencies": {
     "@types/googlemaps": "3.30.20",
