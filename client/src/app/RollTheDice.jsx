@@ -9,6 +9,7 @@ import {
     Button
 } from 'reactstrap'
 import YelpCard from './components/YelpCard'
+import { connect } from 'react-redux'
 
 
 class RollTheDice extends Component {
@@ -17,24 +18,53 @@ class RollTheDice extends Component {
     }
 
     componentDidMount() {
-        this.getGeoLocation()
+        if(this.props.search){
+            this.rtd(this.props.search)
+        } else {
+            this.getGeoLocation()
+        }
     }
 
-    rtd = (position) => {
-        let data = {
-            longitude: position.coords.longitude,
-            latitude: position.coords.latitude,
-            term: "restaurant",
-            radius: 8046,
-            limit: 50,
-            open_now: true,
-            price: 1
+    componentDidUpdate(prevProps){
+        if(this.props.search !== prevProps.search){
+            this.rtd(this.props.search)
+        }
+    }
+
+    rtd = (data, position) => {
+        if(!data){
+            data = {
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude,
+                term: "restaurant",
+                radius: 8046,
+                limit: 50,
+                open_now: true,
+                price: 1
+            }
         }
         yelpService.getBusinesses(data)
             .then(response => {
-                this.setState({
-                    businesses: response.data.businesses
-                })
+                debugger
+                if(response.data.businesses){
+                    this.setState({
+                        businesses: response.data.businesses
+                    })
+                    if(!response.data.businesses[0]){
+                        swal.fire({
+                            type: "error",
+                            title: "No Results",
+                            text: "Please try a different search"
+                        })
+                    }
+                }
+                if(response.data.error){
+                    swal.fire({
+                        type:"error",
+                        title: "Error",
+                        text: response.data.error.description
+                    })
+                }
                 this.shuffleAndSlice(response.data)
             })
             .catch(console.log)
@@ -55,7 +85,7 @@ class RollTheDice extends Component {
 
     getGeoLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.rtd, this.throwSwalError)
+            navigator.geolocation.getCurrentPosition(e => {this.rtd(null, e)}, this.throwSwalError)
         } else {
             this.throwSwalError()
         }
@@ -92,4 +122,8 @@ class RollTheDice extends Component {
     }
 }
 
-export default RollTheDice
+const mapStateToProps = state => ({
+    search: state.search.item
+})
+
+export default connect(mapStateToProps)(RollTheDice)

@@ -21,12 +21,15 @@ app.post("/api/yelp", (req, res, next) => {
         let add = `${x}=${req.body[x]}&`
         queryString = queryString+add
     }
+
+    queryString = queryString.substr(0, queryString.length-1)
     
     let yelpUrl = "https://api.yelp.com/v3/businesses/search?" + queryString
     let auth = {
         authorization: "Bearer " + process.env.YELP_API_KEY
     }
     
+    console.log(yelpUrl)
     const options = {
         url: yelpUrl, 
         headers: auth

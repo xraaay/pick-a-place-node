@@ -5,7 +5,7 @@ const initialValues = {
     location: "",
     useLocation: false,
     radius: "1609",
-    openNow: false
+    open_now: false
 }
 
 const validationSchema  = yup.object().shape({ 
@@ -22,7 +22,7 @@ const validationSchema  = yup.object().shape({
     useLocation: yup.bool(),
     price: yup.string(),
     radius: yup.string(),
-    openNow: yup.bool()
+    open_now: yup.bool()
 })
 
 export { initialValues, validationSchema }

@@ -25,12 +25,12 @@ class YelpCard extends React.Component {
                             emptySymbol={<i className="far fa-star"></i>}
                             fullSymbol={<i className="fas fa-star"></i>}
                         />
-                        <br></br>
+                        {/* <br></br>
                         <span className="text-center">{this.props.business.is_closed
                             ? <Badge color="danger" pill>Closed</Badge>
                             : <Badge color="success" pill>Open</Badge>
                         }
-                        </span>
+                        </span> */}
                         <br></br>
                         <strong>{`${this.props.business.location.address1}, ${this.props.business.location.city}, ${this.props.business.location.zip_code}`}</strong>
                         <br></br>

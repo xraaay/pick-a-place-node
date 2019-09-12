@@ -10,8 +10,6 @@ import {
     Input,
     FormGroup,
     Label,
-    CustomInput,
-    ButtonGroup
 } from 'reactstrap'
 import {
     Formik,
@@ -20,9 +18,9 @@ import {
     FieldArray
 } from 'formik'
 import { initialValues, validationSchema } from './schemas/SearchForm'
-import { getBusinesses } from './services/yelpService'
 import { connect } from 'react-redux'
-import { setSearch } from './actions/searchActions' 
+import { setSearch } from './actions/searchActions'
+import { withRouter } from 'react-router-dom'
 
 class SearchForm extends React.Component {
     state = {
@@ -47,19 +45,20 @@ class SearchForm extends React.Component {
     }
 
     getBusiness = (location, data) => {
-        debugger
         const searchObj = {
             term: data.category,
             radius: data.radius,
-            openNow: data.openNow,
+            open_now: data.open_now,
         }
 
         //Price
-        let priceStr = "";
-        this.state.price.forEach(item => {
-            priceStr = priceStr + item + ","
-        })
-        searchObj.price = priceStr.substr(0, priceStr.length-1)
+        if(this.state.price[0]){
+            let priceStr = "";
+            this.state.price.forEach(item => {
+                priceStr = priceStr + item + ","
+            })
+            searchObj.price = priceStr.substr(0, priceStr.length - 1)
+        }
 
         //Location
         if (location) {
@@ -69,7 +68,10 @@ class SearchForm extends React.Component {
             searchObj.location = data.location
         }
         // getBusinesses(searchObj)
+        console.log(searchObj)
         this.props.setSearch(searchObj)
+        this.toggleModal()
+        this.props.history.push("/rtd")
     }
 
     checkUseLocation = data => {
@@ -146,8 +148,7 @@ class SearchForm extends React.Component {
                                                         {msg => <div className="text-danger">{msg}</div>}
                                                     </ErrorMessage>
                                                 </Row>
-                                                <Row>
-
+                                                <Row className="mb-2">
                                                     <FormGroup check>
                                                         <Label check>
                                                             <Input
@@ -185,7 +186,7 @@ class SearchForm extends React.Component {
                                                             let priceArr = [1, 2, 3, 4];
                                                             return (
                                                                 <>
-                                                                    <label>Price</label>
+                                                                    <label className="mr-3">Price</label>
                                                                     {priceArr.map(item => {
                                                                         return (
                                                                             <FormGroup key={item} check inline>
@@ -208,9 +209,9 @@ class SearchForm extends React.Component {
                                                     <FormGroup check>
                                                         <Label check>
                                                             <Input
-                                                                name="openNow"
+                                                                name="open_now"
                                                                 type="checkbox"
-                                                                value={values.openNow}
+                                                                value={values.open_now}
                                                                 onChange={handleChange}
                                                             />{''}
                                                             Open Now
@@ -224,9 +225,6 @@ class SearchForm extends React.Component {
                                             </Container>
                                         </ModalBody>
                                         <ModalFooter>
-                                            <Button color="secondary" onClick={this.toggleModal}>
-                                                Close
-                                        </Button>
                                             <Button color="primary" type="submit">
                                                 Submit
                                         </Button>
@@ -242,4 +240,8 @@ class SearchForm extends React.Component {
     }
 }
 
-export default connect(null, { setSearch })(SearchForm)
+const mapStateToProps = state => ({
+    posts: state.search.items
+})
+
+export default withRouter(connect(mapStateToProps, { setSearch })(SearchForm))

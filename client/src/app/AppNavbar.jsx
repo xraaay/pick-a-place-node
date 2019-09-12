@@ -97,7 +97,7 @@ class AppNavbar extends React.Component {
                     Roll The Dice
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink
                     href="#"
                     onClick={() => this.props.history.push("/wyr")}
@@ -105,7 +105,7 @@ class AppNavbar extends React.Component {
                     <i className="tim-icons icon-atom" />
                     Would You Rather
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                     <SearchForm />
                 </NavItem>
