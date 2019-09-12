@@ -21,6 +21,8 @@ import {
 } from 'formik'
 import { initialValues, validationSchema } from './schemas/SearchForm'
 import { getBusinesses } from './services/yelpService'
+import { connect } from 'react-redux'
+import { setSearch } from './actions/searchActions' 
 
 class SearchForm extends React.Component {
     state = {
@@ -66,7 +68,8 @@ class SearchForm extends React.Component {
         } else {
             searchObj.location = data.location
         }
-        getBusinesses(searchObj)
+        // getBusinesses(searchObj)
+        this.props.setSearch(searchObj)
     }
 
     checkUseLocation = data => {
@@ -239,4 +242,4 @@ class SearchForm extends React.Component {
     }
 }
 
-export default SearchForm
+export default connect(null, { setSearch })(SearchForm)
