@@ -44,13 +44,12 @@ class SearchForm extends React.Component {
         this.setState({ price: [...this.state.price] });
     }
 
-    handleSubmit = (location, data) => {
+    getBusiness = (location, data) => {
+        debugger
         const searchObj = {
             term: data.category,
             radius: data.radius,
-            price: "",
             openNow: data.openNow,
-            location: ""
         }
 
         //Price
@@ -58,27 +57,23 @@ class SearchForm extends React.Component {
         this.state.price.forEach(item => {
             priceStr = priceStr + item + ","
         })
-        searchObj.price = priceStr
+        searchObj.price = priceStr.substr(0, priceStr.length-1)
 
-        debugger
         //Location
-        if(location){
+        if (location) {
             searchObj.longitude = location.coords.longitude
             searchObj.latitude = location.coords.latitude
         } else {
             searchObj.location = data.location
         }
-        
-        console.log(searchObj)
-        // getBusinesses(query)
+        getBusinesses(searchObj)
     }
 
     checkUseLocation = data => {
-        debugger
         if (data.useLocation) {
-            navigator.geolocation.getCurrentPosition(this.handleSubmit)
+            navigator.geolocation.getCurrentPosition(e => this.getBusiness(e, data))
         } else {
-            this.handleSubmit(null, data)
+            this.getBusiness(null, data)
         }
     }
 
@@ -104,9 +99,9 @@ class SearchForm extends React.Component {
                             const { values, handleChange, handleBlur, handleSubmit } = props
                             return (
                                 <>
-                                    <ModalBody>
-                                        <Container>
-                                            <Form className="form" onSubmit={handleSubmit}>
+                                    <Form className="form" onSubmit={handleSubmit}>
+                                        <ModalBody>
+                                            <Container>
                                                 <Row>
                                                     <label>Category</label>
                                                     <Input
@@ -223,17 +218,17 @@ class SearchForm extends React.Component {
                                                     </FormGroup>
                                                 </Row>
 
-                                            </Form>
-                                        </Container>
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button color="secondary" onClick={this.toggleModal}>
-                                            Close
+                                            </Container>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button color="secondary" onClick={this.toggleModal}>
+                                                Close
                                         </Button>
-                                        <Button color="primary" type="submit">
-                                            Submit
+                                            <Button color="primary" type="submit">
+                                                Submit
                                         </Button>
-                                    </ModalFooter>
+                                        </ModalFooter>
+                                    </Form>
                                 </>
                             )
                         }}
