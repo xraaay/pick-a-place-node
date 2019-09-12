@@ -20,6 +20,7 @@ import {
     FieldArray
 } from 'formik'
 import { initialValues, validationSchema } from './schemas/SearchForm'
+import { getBusinesses } from './services/yelpService'
 
 class SearchForm extends React.Component {
     state = {
@@ -43,9 +44,42 @@ class SearchForm extends React.Component {
         this.setState({ price: [...this.state.price] });
     }
 
-    handleSubmit = data => {
-        console.log(data)
-        console.log(this.state.price)
+    handleSubmit = (location, data) => {
+        const searchObj = {
+            term: data.category,
+            radius: data.radius,
+            price: "",
+            openNow: data.openNow,
+            location: ""
+        }
+
+        //Price
+        let priceStr = "";
+        this.state.price.forEach(item => {
+            priceStr = priceStr + item + ","
+        })
+        searchObj.price = priceStr
+
+        debugger
+        //Location
+        if(location){
+            searchObj.longitude = location.coords.longitude
+            searchObj.latitude = location.coords.latitude
+        } else {
+            searchObj.location = data.location
+        }
+        
+        console.log(searchObj)
+        // getBusinesses(query)
+    }
+
+    checkUseLocation = data => {
+        debugger
+        if (data.useLocation) {
+            navigator.geolocation.getCurrentPosition(this.handleSubmit)
+        } else {
+            this.handleSubmit(null, data)
+        }
     }
 
     render() {
@@ -64,7 +98,7 @@ class SearchForm extends React.Component {
                     <Formik
                         initialValues={initialValues}
                         validationSchema={validationSchema}
-                        onSubmit={this.handleSubmit}
+                        onSubmit={this.checkUseLocation}
                     >
                         {props => {
                             const { values, handleChange, handleBlur, handleSubmit } = props
@@ -72,8 +106,7 @@ class SearchForm extends React.Component {
                                 <>
                                     <ModalBody>
                                         <Container>
-                                            <Form>
-
+                                            <Form className="form" onSubmit={handleSubmit}>
                                                 <Row>
                                                     <label>Category</label>
                                                     <Input
@@ -96,48 +129,24 @@ class SearchForm extends React.Component {
                                                 </Row>
                                                 <Row>
                                                     <label>Location</label>
-                                                    {/* {!values.useLocation ?
-                                                        (
-                                                            <> */}
-                                                            <Input
-                                                                name="location"
-                                                                placeholder="Location"
-                                                                type="text"
-                                                                value={values.location}
-                                                                onChange={handleChange}
-                                                                onFocus={() => {
-                                                                    this.setState({ locationFocus: true })
-                                                                }}
-                                                                onBlur={e => {
-                                                                    handleBlur(e)
-                                                                    this.setState({ locationFocus: false })
-                                                                }}
-                                                                disabled={values.useLocation}
-                                                            />
-                                                            <ErrorMessage name="location">
-                                                                {msg => <div className="text-danger">{msg}</div>}
-                                                            </ErrorMessage>
-                                                            {/* </>
-                                                    ) : (
-                                                            <Input
-                                                                name="location"
-                                                                placeholder="Location"
-                                                                type="text"
-                                                                // value={values.location}
-                                                                onChange={handleChange}
-                                                                // onFocus={() => {
-                                                                //     this.setState({ locationFocus: true })
-                                                                // }}
-                                                                // onBlur={e => {
-                                                                //     handleBlur(e)
-                                                                //     this.setState({ locationFocus: false })
-                                                                // }}
-                                                                disabled={values.useLocation}
-                                                            />
-                                                            // <ErrorMessage name="location">
-                                                            //     {msg => <div className="text-danger">{msg}</div>}
-                                                            // </ErrorMessage>
-                                                        )} */}
+                                                    <Input
+                                                        name="location"
+                                                        placeholder="Location"
+                                                        type="text"
+                                                        value={values.location}
+                                                        onChange={handleChange}
+                                                        onFocus={() => {
+                                                            this.setState({ locationFocus: true })
+                                                        }}
+                                                        onBlur={e => {
+                                                            handleBlur(e)
+                                                            this.setState({ locationFocus: false })
+                                                        }}
+                                                        disabled={values.useLocation}
+                                                    />
+                                                    <ErrorMessage name="location">
+                                                        {msg => <div className="text-danger">{msg}</div>}
+                                                    </ErrorMessage>
                                                 </Row>
                                                 <Row>
 
@@ -221,7 +230,7 @@ class SearchForm extends React.Component {
                                         <Button color="secondary" onClick={this.toggleModal}>
                                             Close
                                         </Button>
-                                        <Button color="primary" onClick={handleSubmit}>
+                                        <Button color="primary" type="submit">
                                             Submit
                                         </Button>
                                     </ModalFooter>
