@@ -98,7 +98,7 @@ class RollTheDice extends Component {
         swal.fire({
             type: "error",
             title: "Location not found",
-            text: "Make sure you allow location access.",
+            text: "Make sure you allow location access or do a custom search.",
             background: "#171941"
         })
     }
