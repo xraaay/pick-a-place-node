@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.listen(process.env.APP_PORT, () => console.log('listening on port ' + process.env.APP_PORT))
+app.listen(process.env.PORT || process.env.APP_PORT)
 
 app.use(express.static(path.join(__dirname, "/build")));
 
