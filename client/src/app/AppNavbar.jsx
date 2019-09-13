@@ -78,13 +78,18 @@ class AppNavbar extends React.Component {
               <NavbarBrand to="/" tag={Link}>
                 <span>Pick a Place</span>
               </NavbarBrand>
+              <button className="navbar-toggler" id="navigation">
+                <span className="navbar-toggler-bar bar1" />
+                <span className="navbar-toggler-bar bar2" />
+                <span className="navbar-toggler-bar bar3" />
+              </button>
             </div>
             <UncontrolledCollapse navbar toggler="#navigation">
               <div className="navbar-collapse-header">
                 <Row>
                   <Col className="collapse-brand" xs="6">
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      BLK• <span>PRO React</span>
+                    <a href="#" onClick={e => {this.props.history.push("/")}}>
+                      <span>Pick a Place</span>
                     </a>
                   </Col>
                   <Col className="collapse-close text-right" xs="6">
