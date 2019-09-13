@@ -18,39 +18,36 @@ class RollTheDice extends Component {
     }
 
     componentDidMount() {
-        if(this.props.search){
-            this.rtd(this.props.search)
+        if(this.props.search && this.props.search.location){
+            this.rtd()
         } else {
             this.getGeoLocation()
         }
     }
 
-    componentDidUpdate(prevProps){
-        if(this.props.search !== prevProps.search){
-            this.rtd(this.props.search)
+    componentDidUpdate(prevProps) {
+        if (this.props.search !== prevProps.search) {
+            this.rtd()
         }
     }
 
-    rtd = (data, position) => {
-        if(!data){
-            data = {
-                longitude: position.coords.longitude,
-                latitude: position.coords.latitude,
-                term: "restaurant",
-                radius: 8046,
-                limit: 50,
-                open_now: true,
-                price: 1
-            }
+    rtd = (position) => {
+        debugger
+        const data = {
+            ...this.props.search
         }
+        if(position){
+            data.longitude = position.coords.longitude;
+            data.latitude = position.coords.latitude;
+        }
+
         yelpService.getBusinesses(data)
             .then(response => {
-                debugger
-                if(response.data.businesses){
+                if (response.data.businesses) {
                     this.setState({
                         businesses: response.data.businesses
                     })
-                    if(!response.data.businesses[0]){
+                    if (!response.data.businesses[0]) {
                         swal.fire({
                             type: "error",
                             title: "No Results",
@@ -58,9 +55,9 @@ class RollTheDice extends Component {
                         })
                     }
                 }
-                if(response.data.error){
+                if (response.data.error) {
                     swal.fire({
-                        type:"error",
+                        type: "error",
                         title: "Error",
                         text: response.data.error.description
                     })
@@ -71,7 +68,7 @@ class RollTheDice extends Component {
     }
 
     shuffleAndSlice = (data) => {
-        if(!data.businesses){
+        if (!data.businesses) {
             data = this.state.businesses
         } else {
             data = data.businesses
@@ -85,7 +82,7 @@ class RollTheDice extends Component {
 
     getGeoLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(e => {this.rtd(null, e)}, this.throwSwalError)
+            navigator.geolocation.getCurrentPosition(this.rtd, this.throwSwalError)
         } else {
             this.throwSwalError()
         }
@@ -106,7 +103,7 @@ class RollTheDice extends Component {
                         {this.state.results && this.state.results.map(item => {
                             return (
                                 <Col sm="4" key={item.id}>
-                                    <YelpCard business={item}/>
+                                    <YelpCard business={item} />
                                 </Col>
                             )
                         })}
