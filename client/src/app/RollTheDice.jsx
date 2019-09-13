@@ -51,7 +51,8 @@ class RollTheDice extends Component {
                         swal.fire({
                             type: "error",
                             title: "No Results",
-                            text: "Please try a different search"
+                            text: "Please try a different search",
+                            background: "#171941"
                         })
                     } else {
                         this.setState({
@@ -64,7 +65,8 @@ class RollTheDice extends Component {
                     swal.fire({
                         type: "error",
                         title: "Error",
-                        text: response.data.error.description
+                        text: response.data.error.description,
+                        background: "#171941"
                     })
                 }
             })
@@ -96,7 +98,8 @@ class RollTheDice extends Component {
         swal.fire({
             type: "error",
             title: "Location not found",
-            text: "Make sure you allow location access."
+            text: "Make sure you allow location access.",
+            background: "#171941"
         })
     }
     render() {

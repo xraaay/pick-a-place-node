@@ -2,6 +2,7 @@ const express = require("express")
 const dotenv = require("dotenv")
 const request = require("request")
 const bodyParser = require('body-parser')
+const path = require("path")
 
 dotenv.config()
 
@@ -13,6 +14,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.listen(process.env.APP_PORT, () => console.log('listening on port ' + process.env.APP_PORT))
+
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 app.post("/api/yelp", (req, res, next) => {
     let queryString = ""
