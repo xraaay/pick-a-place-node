@@ -4,3 +4,9 @@ export const setSearch = data => dispatch => {
         payload: data
     })
 }
+
+export const resetSearch = () => dispatch => {
+    dispatch({
+        type: "RESET_SEARCH"
+    })
+}

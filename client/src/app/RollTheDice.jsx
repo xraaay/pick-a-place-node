@@ -18,6 +18,16 @@ class RollTheDice extends Component {
     }
 
     componentDidMount() {
+        this.handleLocationLogic()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.search !== prevProps.search) {
+            this.handleLocationLogic()
+        }
+    }
+
+    handleLocationLogic = () => {
         if(this.props.search && this.props.search.location){
             this.rtd()
         } else {
@@ -25,14 +35,7 @@ class RollTheDice extends Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.search !== prevProps.search) {
-            this.rtd()
-        }
-    }
-
     rtd = (position) => {
-        debugger
         const data = {
             ...this.props.search
         }
@@ -44,15 +47,17 @@ class RollTheDice extends Component {
         yelpService.getBusinesses(data)
             .then(response => {
                 if (response.data.businesses) {
-                    this.setState({
-                        businesses: response.data.businesses
-                    })
                     if (!response.data.businesses[0]) {
                         swal.fire({
                             type: "error",
                             title: "No Results",
                             text: "Please try a different search"
                         })
+                    } else {
+                        this.setState({
+                            businesses: response.data.businesses
+                        })
+                        this.shuffleAndSlice(response.data)
                     }
                 }
                 if (response.data.error) {
@@ -62,7 +67,6 @@ class RollTheDice extends Component {
                         text: response.data.error.description
                     })
                 }
-                this.shuffleAndSlice(response.data)
             })
             .catch(console.log)
     }
@@ -82,13 +86,13 @@ class RollTheDice extends Component {
 
     getGeoLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.rtd, this.throwSwalError)
+            navigator.geolocation.getCurrentPosition(this.rtd, this.throwSwalLocationError)
         } else {
-            this.throwSwalError()
+            this.throwSwalLocationError()
         }
     }
 
-    throwSwalError() {
+    throwSwalLocationError() {
         swal.fire({
             type: "error",
             title: "Location not found",

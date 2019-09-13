@@ -29,6 +29,8 @@ import {
   NavLink
 } from "reactstrap";
 import SearchForm from "./SearchForm";
+import { resetSearch } from './actions/searchActions'
+import { connect } from 'react-redux'
 
 class AppNavbar extends React.Component {
   state = {
@@ -62,6 +64,11 @@ class AppNavbar extends React.Component {
     this.props.history.push(route)
   }
 
+  handleRollTheDice = () => {
+    this.props.resetSearch()
+    this.props.history.push("/rtd")
+  }
+
   render() {
     return (
       <>
@@ -91,7 +98,7 @@ class AppNavbar extends React.Component {
                 <NavItem>
                   <NavLink
                     href="#"
-                    onClick={() => this.props.history.push("/rtd")}
+                    onClick={this.handleRollTheDice}
                   >
                     <i className="tim-icons icon-app"></i>
                     Roll The Dice
@@ -118,4 +125,4 @@ class AppNavbar extends React.Component {
   }
 }
 
-export default withRouter(AppNavbar);
+export default withRouter(connect(null, { resetSearch })(AppNavbar));

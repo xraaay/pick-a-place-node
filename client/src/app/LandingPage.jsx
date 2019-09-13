@@ -50,7 +50,7 @@ class LandingPage extends Component {
                                 className="page-header-image"
                                 style={{
                                     backgroundImage:
-                                        "url(https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2012/10/Food.jpg)",
+                                        "url(https://foodrevolution.org/wp-content/uploads/blog-featured_healthy_foods-20180306.jpg)",
                                     transform: this.state.transform
                                 }}
                             />
@@ -61,7 +61,7 @@ class LandingPage extends Component {
                             </Container>
                         </div>
                     </div>
-                    <div style={{ marginBottom: "100vh" }} className="main">
+                    <div className="main">
                         <div className="section">
                             <Container className="mx-auto text-center">
                                 <h3>Don't know what to eat?</h3>
