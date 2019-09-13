@@ -4,7 +4,6 @@ import {
     CardImg,
     CardText,
     CardTitle,
-    Badge,
 } from 'reactstrap'
 import Rating from 'react-rating'
 class YelpCard extends React.Component {

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import ColorNavbar from 'components/Navbars/ColorNavbar';
-import { Container, Row, Col, Button } from 'reactstrap'
-import AppNavbar from './AppNavbar';
+import { Container, Button } from 'reactstrap'
 
 
 

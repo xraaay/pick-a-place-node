@@ -84,13 +84,13 @@ class AppNavbar extends React.Component {
                 <span className="navbar-toggler-bar bar3" />
               </button>
             </div>
-            <UncontrolledCollapse navbar toggler="#navigation">
+            <UncontrolledCollapse navbar toggler="#navigation" style={{overflow: "auto"}}>
               <div className="navbar-collapse-header">
                 <Row>
                   <Col className="collapse-brand" xs="6">
-                    <a href="#" onClick={e => {this.props.history.push("/")}}>
+                    <NavLink to="/" tag={Link}>
                       <span>Pick a Place</span>
-                    </a>
+                    </NavLink>
                   </Col>
                   <Col className="collapse-close text-right" xs="6">
                     <button className="navbar-toggler" id="navigation">
