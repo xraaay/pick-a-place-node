@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.58323c11.chunk.css",
-    "main.js": "/static/js/main.6aebb9bb.chunk.js",
-    "main.js.map": "/static/js/main.6aebb9bb.chunk.js.map",
+    "main.js": "/static/js/main.ade9a228.chunk.js",
+    "main.js.map": "/static/js/main.ade9a228.chunk.js.map",
     "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
     "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
     "static/js/2.3fa66f6f.chunk.js": "/static/js/2.3fa66f6f.chunk.js",
     "static/js/2.3fa66f6f.chunk.js.map": "/static/js/2.3fa66f6f.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.5b53e84d518bcd96ddd63da611cdfb40.js": "/precache-manifest.5b53e84d518bcd96ddd63da611cdfb40.js",
+    "precache-manifest.cfd7dbf828c1b8a29a445c3f713ca27f.js": "/precache-manifest.cfd7dbf828c1b8a29a445c3f713ca27f.js",
     "service-worker.js": "/service-worker.js",
     "static/css/main.58323c11.chunk.css.map": "/static/css/main.58323c11.chunk.css.map",
     "static/media/blk-design-system-pro-react.scss?v1.0.0": "/static/media/square5.fc998805.png",
