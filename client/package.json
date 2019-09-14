@@ -61,5 +61,6 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "https://pick-a-place.herokuapp.com/",
   "proxy": "http://localhost:5000"
 }
